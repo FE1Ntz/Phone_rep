@@ -40,6 +40,7 @@
             @endforeach
             </tbody>
         </table>
+        {{ $clients->links() }}
         <div>
             @if(session()->get('success'))
                 <div class="alert alert-success">

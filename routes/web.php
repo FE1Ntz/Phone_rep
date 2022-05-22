@@ -4,6 +4,10 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DeviceManufacturerController;
 use App\Http\Controllers\DeviceModelController;
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\PartManufacturerController;
+
+use App\Http\Controllers\PartModelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,5 +29,8 @@ Route::resource('/client', ClientController::class);
 Route::resource('/device', DeviceController::class);
 Route::resource('/device-manufacturer', DeviceManufacturerController::class);
 Route::resource('/device-model', DeviceModelController::class);
+Route::resource('/part', PartController::class);
+Route::resource('/part-manufacturer', PartManufacturerController::class);
+Route::resource('/part-model', PartModelController::class);
 //Route::get('/client', [ClientController::class, 'index'])->name('client.index');
 //Route::post('/client', [ClientController::class, 'store'])->name('client.store');

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('part_models', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('manufacturer_id')->constrained('part_manufacturers');
             $table->string('name', 50);
             $table->timestamps();
         });

@@ -6,13 +6,11 @@
         }
     </style>
     <div class="push-top">
-        <div class="d-flex flex-start">
-            <a class="btn btn-primary mr-2" href="{{route('device.index')}}">Device</a>
-            <a class="btn btn-primary mr-2" href="{{route('device-manufacturer.index')}}">Manufacturer</a>
-            <a class="btn btn-primary" href="{{route('device-model.index')}}">Model</a>
-        </div>
-        <div class="mt-2 mb-2" style="display: flex; justify-content: flex-end;">
-            <a class="btn btn-primary" href="{{route('device-model.create')}}">Add Model</a>
+        <div class="d-flex mt-2 mb-2">
+            <div><a class="btn btn-primary mr-2" href="{{route('device.index')}}">Device</a></div>
+            <div><a class="btn btn-primary mr-2" href="{{route('device-manufacturer.index')}}">Manufacturer</a></div>
+            <div><a class="btn btn-primary" href="{{route('device-model.index')}}">Model</a></div>
+            <div class="ml-auto"><a class="btn btn-primary" style="float: right" href="{{route('device-model.create')}}">Add Model</a></div>
         </div>
         <table class="table">
             <thead>
@@ -39,6 +37,7 @@
             @endforeach
             </tbody>
         </table>
+        {{ $deviceModels->links() }}
         <div>
             @if(session()->get('success'))
                 <div class="alert alert-success">

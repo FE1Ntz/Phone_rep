@@ -17,7 +17,8 @@ class DeviceModelFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->unique()->randomElement(["Galaxy M32", "Galaxy M31", "Galaxy A32", "Galaxy A51", "Galaxy F12", "Galaxy F22", "Galaxy S22", "Galaxy A73 5G", "Galaxy S22+", "Galaxy S20 FE"])
+
         ];
     }
 }

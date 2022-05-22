@@ -10,7 +10,7 @@
     </style>
     <div class="card push-top">
         <div class="card-header">
-            Add Model
+            Add manufacturer
         </div>
         <div class="card-body">
             @if ($errors->any())
@@ -22,23 +22,13 @@
                     </ul>
                 </div><br />
             @endif
-            <form method="post" action="{{ route('device-model.store') }}">
+            <form method="post" action="{{ route('part-manufacturer.store') }}">
                 <div class="form-group">
                     @csrf
                     <label for="name">Manufacturer</label>
-                    <select class="form-control" name="manufacturer_id">
-                        <option value="">...</option>
-                        @foreach($deviceManufacturers as $manufacturer)
-                            <option value="{{ $manufacturer->id }}">{{$manufacturer->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    @csrf
-                    <label for="name">Model name</label>
                     <input type="text" class="form-control" name="name"/>
                 </div>
-                <button type="submit" class="btn btn-block btn-danger">Create Model</button>
+                <button type="submit" class="btn btn-block btn-danger">Create manufacturer</button>
             </form>
         </div>
     </div>

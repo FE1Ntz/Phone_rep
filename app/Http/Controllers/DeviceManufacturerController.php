@@ -14,7 +14,7 @@ class DeviceManufacturerController extends Controller
      */
     public function index()
     {
-        $deviceManufacturers = DeviceManufacturer::all();
+        $deviceManufacturers = DeviceManufacturer::paginate(5)->withQueryString();
 
         return view('device_manufacturer.index', compact('deviceManufacturers'));
     }

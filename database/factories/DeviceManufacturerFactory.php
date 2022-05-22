@@ -17,7 +17,7 @@ class DeviceManufacturerFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->unique()->randomElement(["Apple", "POCO", "VIVO", "OnePlus", "OPPO", "Samsung", "Xiaomi", "Huawei" , "LG", "Sony"])
         ];
     }
 }

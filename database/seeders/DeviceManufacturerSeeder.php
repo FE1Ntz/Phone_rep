@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DeviceManufacturer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,6 @@ class DeviceManufacturerSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DeviceManufacturer::factory(10)->create();
     }
 }

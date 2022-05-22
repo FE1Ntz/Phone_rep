@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeviceManufacturer;
 use App\Models\DeviceModel;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class DeviceModelController extends Controller
      */
     public function index()
     {
-        $deviceModels = DeviceModel::all();
+        $deviceModels = DeviceModel::paginate(5)->withQueryString();
 
         return view('device_model.index', compact('deviceModels'));
     }
@@ -27,7 +28,8 @@ class DeviceModelController extends Controller
      */
     public function create()
     {
-        return view('device_model.create');
+        $deviceManufacturers = DeviceManufacturer::all();
+        return view('device_model.create' , compact('deviceManufacturers'));
     }
 
     /**
@@ -39,11 +41,13 @@ class DeviceModelController extends Controller
     public function store(Request $request)
     {
         $storeData = $request->validate([
+            'manufacturer_id' => 'required|integer',
             'name' => 'required|max:50',
         ]);
-        $client = new DeviceModel();
-        $client->name = $request->input('name');
-        $client->save();
+        $deviceModel = new DeviceModel();
+        $deviceModel->manufacturer_id = $request->input('manufacturer_id');
+        $deviceModel->name = $request->input('name');
+        $deviceModel->save();
 
         return redirect('/device-model')->with('success', 'Model has been saved!');
     }
@@ -68,8 +72,9 @@ class DeviceModelController extends Controller
     public function edit($id)
     {
         $model = DeviceModel::findOrFail($id);
+        $deviceManufacturers = DeviceManufacturer::all();
 
-        return view('device_model.edit', compact('model'));
+        return view('device_model.edit', compact('model','deviceManufacturers'));
     }
 
     /**
@@ -86,7 +91,8 @@ class DeviceModelController extends Controller
         ]);
         /** @var DeviceModel $deviceModel */
         $deviceModel = DeviceModel::query()->findOrFail($id);
-        $deviceModel-> name = $request->input('name');
+        $deviceModel->manufacturer_id = $request->input('manufacturer_id');
+        $deviceModel->name = $request->input('name');
         $deviceModel->save();
 
         return redirect('/device-model')->with('success', 'Model has been updated');

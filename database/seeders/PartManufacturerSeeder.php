@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\PartManufacturer;
 use Illuminate\Database\Seeder;
 
 class PartManufacturerSeeder extends Seeder
@@ -14,6 +14,22 @@ class PartManufacturerSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $manufacturers = [
+            "Qualcomm",
+            "Mediatek",
+            "Samsung",
+            "Huawei",
+            "Apple",
+            "Intel",
+            "AMD",
+            "Nvidia",
+            "Sony",
+            "LG",
+            'Xiaomi'
+        ];
+
+        foreach ($manufacturers as $manufacturer) {
+            PartManufacturer::factory()->create(['name' => $manufacturer]);
+        }
     }
 }

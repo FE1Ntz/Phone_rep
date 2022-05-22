@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\DeviceModel;
 use Illuminate\Database\Seeder;
 
 class DeviceModelSeeder extends Seeder
@@ -14,6 +14,6 @@ class DeviceModelSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DeviceModel::factory(10)->create();
     }
 }

@@ -11,13 +11,11 @@
                 {{ session()->get('success') }}
             </div><br />
         @endif
-        <div class="d-flex flex-start">
-            <a class="btn btn-primary mr-2" href="{{route('device.index')}}">Device</a>
-            <a class="btn btn-primary mr-2" href="{{route('device-manufacturer.index')}}">Manufacturer</a>
-            <a class="btn btn-primary" href="{{route('device-model.index')}}">Model</a>
-        </div>
-        <div class="mt-2 mb-2" style="display: flex; justify-content: flex-end;">
-            <a class="btn btn-primary" href="{{route('device.create')}}">Add Device</a>
+        <div class="d-flex mt-2 mb-2">
+            <div><a class="btn btn-primary mr-2" href="{{route('device.index')}}">Device</a></div>
+            <div><a class="btn btn-primary mr-2" href="{{route('device-manufacturer.index')}}">Manufacturer</a></div>
+            <div><a class="btn btn-primary" href="{{route('device-model.index')}}">Model</a></div>
+            <div class="ml-auto"><a class="btn btn-primary" style="float: right" href="{{route('device.create')}}">Add Device</a></div>
         </div>
         <table class="table">
             <thead>
@@ -35,8 +33,8 @@
                     <td>{{$device->manufacturer->name}}</td>
                     <td>{{$device->model->name}}</td>
                     <td class="text-center">
-                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                        <form action="#" method="post" style="display: inline-block">
+                        <a href="{{ route('device.edit', $device->id)}}" class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{{ route('device.destroy', $device->id)}}" method="post" style="display: inline-block">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" type="submit">Delete</button>
@@ -46,5 +44,6 @@
                 @endforeach
             </tbody>
         </table>
-        <div>
+            {{ $devices->links() }}
+            <div>
 @endsection

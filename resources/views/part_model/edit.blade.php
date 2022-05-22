@@ -22,21 +22,12 @@
                     </ul>
                 </div><br />
             @endif
-            <form method="post" action="{{ route('device-model.update', $model->id) }}">
-                <div class="form-group">
-                    @csrf
-                    <label for="name">Manufacturer</label>
-                    <select class="form-control" name="manufacturer_id">
-                        @foreach($deviceManufacturers as $manufacturer)
-                            <option value="{{ $manufacturer->id }}"  @selected($manufacturer->id === $model->manufacturer_id)>{{ $manufacturer->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <form method="post" action="{{ route('part-model.update', $part_model->id) }}">
                 <div class="form-group">
                     @csrf
                     @method('PATCH')
                     <label for="name">Model</label>
-                    <input type="text" class="form-control" name="name" value="{{ $model->name }}"/>
+                    <input type="text" class="form-control" name="name" value="{{ $part_model->name }}"/>
                 </div>
                 <button type="submit" class="btn btn-block btn-danger">Edit model</button>
             </form>

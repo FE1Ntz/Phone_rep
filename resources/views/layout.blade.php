@@ -26,7 +26,7 @@
                     <a class="nav-link" href="{{ route('device.index') }}">Devices</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Parts</a>
+                    <a class="nav-link" href="{{ route('part.index') }}">Parts</a>
                 </li>
             </ul>
         </div>
@@ -38,5 +38,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" type="text/js"></script>
+    @yield('script')
 </body>
 </html>

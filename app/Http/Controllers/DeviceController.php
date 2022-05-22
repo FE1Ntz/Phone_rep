@@ -16,7 +16,7 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        $devices = Device::all();
+        $devices = Device::paginate(5)->withQueryString();
 
         return view('device.index', compact('devices'));
     }
@@ -46,6 +46,9 @@ class DeviceController extends Controller
         $storeData = $request->validate([
             'device_manufacturer_id' => 'required|integer',
             'device_model_id' => 'required|integer',
+        ], [
+            'device_manufacturer_id.required' => 'The device manufacturer field is required.',
+            'device_model_id.required' => 'The device model field is required.',
         ]);
         $device = new Device();
         $device->manufacturer_id = $request->input('device_manufacturer_id');
@@ -74,9 +77,11 @@ class DeviceController extends Controller
      */
     public function edit($id)
     {
-        $client = Client::findOrFail($id);
+        $device = Device::findOrFail($id);
+        $deviceManufacturers = DeviceManufacturer::all();
+        $deviceModels = DeviceModel::all();
 
-        return view('client.edit', compact('client'));
+        return view('device.edit', compact('device','deviceManufacturers','deviceModels'));
     }
 
     /**
@@ -89,20 +94,16 @@ class DeviceController extends Controller
     public function update(Request $request, $id)
     {
         $storeData = $request->validate([
-            'name' => 'required|max:50',
-            'last_name' => 'required|max:50',
-            'email' => 'required|max:255',
-            'phone' => 'required|numeric',
+            'device_manufacturer_id' => 'required|integer',
+            'device_model_id' => 'required|integer',
         ]);
-        /** @var Client $client */
-        $client = Client::query()->findOrFail($id);
-        $client->first_name = $request->input('name');
-        $client->last_name = $request->input('last_name');
-        $client->email = $request->input('email');
-        $client->phone_number = $request->input('phone');
-        $client->save();
+        /** @var Device $device */
+        $device = Device::query()->findOrFail($id);
+        $device->manufacturer_id = $request->input('device_manufacturer_id');
+        $device->model_id = $request->input('device_model_id');
+        $device->save();
 
-        return redirect('/client')->with('success', 'Client has been updated');
+        return redirect('/device')->with('success', 'Device has been updated');
     }
 
     /**
@@ -113,9 +114,9 @@ class DeviceController extends Controller
      */
     public function destroy($id)
     {
-        Client::destroy($id);
+        Device::destroy($id);
 
-        return redirect('/client')->with('success', 'Client has been deleted!');
+        return redirect('/device')->with('success', 'Device has been deleted!');
     }
 
 }
