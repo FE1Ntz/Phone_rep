@@ -26,45 +26,62 @@
                 <div class="form-group">
                     @csrf
                     <label for="name">Part name</label>
-                    <select class="form-control" name="name">
-                        <option value="">...</option>
-                        <option value="CPU">CPU</option>
-                        <option value="GPU">GPU</option>
-                        <option value="Motherboard">Motherboard</option>
-                        <option value="RAM">RAM</option>
-                        <option value="Battery">Battery</option>
-                        <option value="Camera">Camera</option>
-                        <option value="HDD">HDD</option>
-                        <option value="Buttons">Buttons</option>
-                        <option value="Fingerprint sensor">Fingerprint sensor</option>
+                    <select class="form-control" name="partName">
+                        <option value=""></option>
+                        @foreach($partNames as $partName)
+                            <option @selected($partName == old('partName')) value="{{ $partName }}">{{ $partName }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     @csrf
                     <label for="name">Manufacturer</label>
-                    <select class="form-control" name="device_manufacturer_id">
+                    <select onchange="filter()" class="form-control" name="part_manufacturer_id" id="manufacturers">
+                        <option value=""></option>
                         @foreach($partManufacturers as $manufacturer)
-                            <option value="{{ $manufacturer->id }}">{{$manufacturer->name}}</option>
+                            <option @selected($manufacturer->id == old('part_manufacturer_id')) value="{{ $manufacturer->id }}">{{$manufacturer->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     @csrf
                     <label for="last_name">Model</label>
-                    <select class="form-control" name="device_model_id">
-                        @foreach($partModels as $model)
-                            <option value="{{ $model->id }}">{{$model->name}}</option>
+                    <select class="form-control" name="part_model_id" id="models">
+                        <option value=""></option>
+                    @foreach($partModels as $model)
+                            <option manufacturer_id="{{$model->manufacturer_id}}" value="{{ $model->id }}">{{$model->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     @csrf
                     <label for="name">Count on storage</label>
-                    <input type="text" class="form-control" name="count"/>
+                    <input type="text" class="form-control" value="" name="count"/>
                 </div>
                 <button type="submit" class="btn btn-block btn-danger">Create part</button>
             </form>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        filter();
+        function filter() {
+            $("#models").val([]);
+            var manufacturer = document.getElementById("manufacturers").value;
+            var models = document.getElementById("models");
+            console.log(models.options[0]);
+            for (var i = 0; i < models.length; i++) {
+                var id = models.options[i].getAttribute("manufacturer_id");
+                console.log(id);
+                console.log(manufacturer);
+                if (id !== manufacturer) {
+                    models.options[i].style.display = 'none';
+                } else {
+                    models.options[i].style.display = 'list-item';
+                }
+            }
+        }
+    </script>
 @endsection
 

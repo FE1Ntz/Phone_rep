@@ -41,9 +41,11 @@ class PartModelController extends Controller
     public function store(Request $request)
     {
         $storeData = $request->validate([
+            'manufacturer_id' => 'required|integer',
             'name' => 'required|max:50',
         ]);
         $part_model = new PartModel();
+        $part_model->manufacturer_id = $request->input('manufacturer_id');
         $part_model->name = $request->input( 'name');
         $part_model->save();
 
@@ -70,8 +72,9 @@ class PartModelController extends Controller
     public function edit($id)
     {
         $part_model = PartModel::findOrFail($id);
+        $partManufacturers = PartManufacturer::all();
 
-        return view('part_model.edit', compact('part_model'));
+        return view('part_model.edit', compact('part_model', 'partManufacturers'));
     }
 
     /**
@@ -84,10 +87,12 @@ class PartModelController extends Controller
     public function update(Request $request, $id)
     {
         $storeData = $request->validate([
+            'manufacturer_id' => 'required|integer',
             'name' => 'required|max:50',
         ]);
         /** @var PartModel $part_model */
         $part_model = PartModel::query()->findOrFail($id);
+        $part_model->manufacturer_id = $request->input('manufacturer_id');
         $part_model->name = $request->input('name');
         $part_model->save();
 

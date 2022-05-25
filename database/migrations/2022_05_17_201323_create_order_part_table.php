@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained();
             $table->foreignId('part_id')->constrained();
-            $table->integer('count')->unsigned();
+            $table->integer('count')->unsigned()->default(1);
             $table->timestamps();
         });
     }

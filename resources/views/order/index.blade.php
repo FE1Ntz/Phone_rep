@@ -12,7 +12,7 @@
             </div><br />
         @endif
         <div class="mt-2 mb-2" style="display: flex; justify-content: flex-end;">
-            <a class="btn btn-primary" href="{{ route('order.create') }}">Add Client</a>
+            <a class="btn btn-primary" href="{{ route('order.create') }}">Add Order</a>
         </div>
         <table class="table">
             <thead>
@@ -20,26 +20,23 @@
                 <td>ID</td>
                 <td>First name</td>
                 <td>Last name</td>
-                <td>Email</td>
-                <td>Phone</td>
+                <td>Device</td>
+                <td>Status</td>
+                <td>Price</td>
                 <td class="text-center">Action</td>
             </tr>
             </thead>
             <tbody>
-            @foreach($clients as $client)
+            @foreach($orders as $order)
                 <tr>
-                    <td>{{$client->id}}</td>
-                    <td>{{$client->first_name}}</td>
-                    <td>{{$client->last_name}}</td>
-                    <td>{{$client->email}}</td>
-                    <td>{{$client->phone_number}}</td>
+                    <td>{{$order->id}}</td>
+                    <td>{{$order->client->first_name}}</td>
+                    <td>{{$order->client->last_name}}</td>
+                    <td>{{$order->device->manufacturer->name." ".$order->device->model->name}} </td>
+                    <td>{{$order->is_done ? "Done" : "In progress"}}</td>
+                    <td>{{$order->price}}</td>
                     <td class="text-center">
-                        <a href="{{ route('client.edit', $client->id)}}" class="btn btn-primary btn-sm">Edit</a>
-                        <form action="{{ route('client.destroy', $client->id)}}" method="post" style="display: inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                        </form>
+                        <a href="{{route('order.edit', $order->id)}}" class="btn btn-primary btn-sm">Edit</a>
                     </td>
                 </tr>
             @endforeach

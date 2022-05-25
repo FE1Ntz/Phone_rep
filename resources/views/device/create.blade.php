@@ -27,7 +27,7 @@
                     @csrf
                     <label for="name">Manufacturer</label>
                     <select onchange="filter()" class="form-control" name="device_manufacturer_id" id="manufacturers">
-                        <option value="">...</option>
+                        <option value=""></option>
                         @foreach($deviceManufacturers as $manufacturer)
                             <option @selected($manufacturer->id == old('device_manufacturer_id')) value="{{ $manufacturer->id }}">{{$manufacturer->name}}</option>
                         @endforeach

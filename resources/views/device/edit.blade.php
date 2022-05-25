@@ -95,5 +95,6 @@
             console.log('manufacturer changed');
         }
     </script>
+@endsection
 
 

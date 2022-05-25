@@ -28,7 +28,8 @@
                         @csrf
                         <input type="hidden" name="_method" value="PUT">
                         <label for="name">Part name</label>
-                        <select class="form-control" name="name">
+                        <select class="form-control" name="partName">
+                            <option value=""></option>
                             @foreach($partNames as $partName)
                             <option value="{{ $partName }}"  @selected($partName === $part->name)>{{ $partName }}</option>
                             @endforeach
@@ -37,18 +38,30 @@
                     <div class="form-group">
                         @csrf
                         <label for="name">Manufacturer</label>
-                        <select class="form-control" name="device_manufacturer_id">
+                        <select onchange="manufacturer_changed()" class="form-control" name="part_manufacturer_id" id="manufacturers">
                             @foreach($partManufacturers as $manufacturer)
-                                <option value="{{ $manufacturer->id }}">{{$manufacturer->name}}</option>
+                                <?php
+                                /** @var \App\Models\PartManufacturer $manufacturer */
+                                /** @var \App\Models\Part $part */
+                                if (old('part_manufacturer_id')) {
+                                    $isSelected = old('part_manufacturer_id') == $manufacturer->id;
+                                } else {
+                                    $isSelected = $manufacturer->id == $part->manufacturer_id;
+                                }
+                                ?>
+                                <option @selected($isSelected) value="{{ $manufacturer->id }}">
+                                    {{$manufacturer->name}}
+                                </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         @csrf
                         <label for="last_name">Model</label>
-                        <select class="form-control" name="device_model_id">
+                        <select class="form-control" name="part_model_id" id="models">
+                            <option @selected( !old('part_model_id')) value=""></option>
                             @foreach($partModels as $model)
-                                <option value="{{ $model->id }}">{{$model->name}}</option>
+                                <option @selected($part->model_id === $model->id) manufacturer_id="{{$model->manufacturer_id}}" value="{{ $model->id }}">{{$model->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -61,5 +74,39 @@
                 </form>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        window.onload = function () {
+            filter();
+            if ({{(int) (old('part_manufacturer_id', '0') && (old('part_manufacturer_id') != $part->manufacturer_id))}}) {
+                $("#models").val([]);
+            }
+
+        }
+
+        function filter() {
+            var manufacturer = document.getElementById("manufacturers").value;
+            var models = document.getElementById("models");
+            console.log(models.options[0]);
+            for (var i = 0; i < models.length; i++) {
+                var id = models.options[i].getAttribute("manufacturer_id");
+                console.log(id);
+                console.log(manufacturer);
+                if (id !== manufacturer) {
+                    models.options[i].style.display = 'none';
+                } else {
+                    models.options[i].style.display = 'list-item';
+                }
+            }
+            console.log('filter');
+        }
+
+        function manufacturer_changed () {
+            filter();
+            $("#models").val([]);
+            console.log('manufacturer changed');
+        }
+    </script>
 @endsection
 

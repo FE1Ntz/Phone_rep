@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DeviceManufacturerController;
 use App\Http\Controllers\DeviceModelController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\PartManufacturerController;
 
@@ -26,6 +27,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/client', ClientController::class);
+Route::resource('/order', OrderController::class);
 Route::resource('/device', DeviceController::class);
 Route::resource('/device-manufacturer', DeviceManufacturerController::class);
 Route::resource('/device-model', DeviceModelController::class);

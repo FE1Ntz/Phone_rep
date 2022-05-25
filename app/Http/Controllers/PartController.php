@@ -31,7 +31,19 @@ class PartController extends Controller
     {
         $partManufacturers = PartManufacturer::all();
         $partModels = PartModel::all();
-        return view('part.create', compact('partManufacturers','partModels'));
+        $partNames = [
+                "CPU",
+                "GPU",
+                "Motherboard",
+                "RAM",
+                "Battery",
+                "Camera",
+                "HDD",
+                "Buttons",
+                "Fingerprint sensor",
+            ];
+
+        return view('part.create', compact('partManufacturers','partModels','partNames'));
     }
 
     /**
@@ -43,15 +55,15 @@ class PartController extends Controller
     public function store(Request $request)
     {
         $storeData = $request->validate([
-            'name' => 'required|max:50',
-            'device_manufacturer_id' => 'required|integer',
-            'device_model_id' => 'required|integer',
+            'partName' => 'required|max:50',
+            'part_manufacturer_id' => 'required|integer',
+            'part_model_id' => 'required|integer',
             'count' => 'required|integer',
         ]);
         $part = new Part();
-        $part->name =$request->input('name');
-        $part->manufacturer_id = $request->input('device_manufacturer_id');
-        $part->model_id = $request->input('device_model_id');
+        $part->name =$request->input('partName');
+        $part->manufacturer_id = $request->input('part_manufacturer_id');
+        $part->model_id = $request->input('part_model_id');
         $part->count = $request->input('count');
         $part->save();
 
@@ -105,19 +117,16 @@ class PartController extends Controller
     public function update(Request $request, $id)
     {
         $storeData = $request->validate([
-            'name' => 'required|max:50',
-            'device_manufacturer_id' => 'required|integer',
-            'device_model_id' => 'required|integer',
+            'partName' => 'required|max:50',
+            'part_manufacturer_id' => 'required|integer',
+            'part_model_id' => 'required|integer',
             'count' => 'required|integer',
         ]);
-
-
-
         /** @var Part $part */
         $part = Part::query()->findOrFail($id);
-        $part->name =$request->input('name');
-        $part->manufacturer_id = $request->input('device_manufacturer_id');
-        $part->model_id = $request->input('device_model_id');
+        $part->name =$request->input('partName');
+        $part->manufacturer_id = $request->input('part_manufacturer_id');
+        $part->model_id = $request->input('part_model_id');
         $part->count = $request->input('count');
         $part->save();
 

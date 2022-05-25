@@ -39,7 +39,8 @@
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" class="form-control" name="phone"/>
+                    <input type="tel" class="form-control" name="phone" pattern="^[\+][0-9]{3}[0-9]{3}[0-9]{5}$" required/>
+                    <small>Format: +12345678901</small>
                 </div>
                 <button type="submit" class="btn btn-block btn-danger">Create Client</button>
             </form>
