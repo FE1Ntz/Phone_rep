@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DeviceManufacturerController;
@@ -34,5 +35,6 @@ Route::resource('/device-model', DeviceModelController::class);
 Route::resource('/part', PartController::class);
 Route::resource('/part-manufacturer', PartManufacturerController::class);
 Route::resource('/part-model', PartModelController::class);
+Route::resource('/about', AboutController::class);
 //Route::get('/client', [ClientController::class, 'index'])->name('client.index');
 //Route::post('/client', [ClientController::class, 'store'])->name('client.store');
